@@ -114,9 +114,13 @@ public_users.get('/review/:isbn', function (req, res) {
     const book = books[isbn];
 
     if (book) {
-        return res.status(200).send(JSON.stringify(book.reviews, null, 4));
+        if (Object.keys(book.reviews).length > 0) {
+            return res.status(200).send(JSON.stringify(book.reviews, null, 4));
+        } else {
+            return res.status(200).json({ message: "No reviews found for this book." });
+        }
     } else {
-        return res.status(404).json({ message: "No reviews found for this ISBN" });
+        return res.status(404).json({ message: "ISBN not found" });
     }
 });
 

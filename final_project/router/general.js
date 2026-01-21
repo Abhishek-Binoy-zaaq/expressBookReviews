@@ -135,6 +135,7 @@ async function getBooks() {
     } catch (error) {
         // Log the error message if the request fails
         console.error("Error fetching books:", error.message);
+        return null;
     }
 }
 
@@ -151,6 +152,7 @@ async function getBookByISBN(isbn) {
         } else {
             console.error("Error fetching book:", error.message);
         }
+        return null;
     }
 }
 
@@ -167,6 +169,7 @@ async function getBookByAuthor(author) {
         } else {
             console.error("Error fetching books by author:", error.message);
         }
+        return null;
     }
 }
 
@@ -183,6 +186,7 @@ async function getBookByTitle(title) {
         } else {
             console.error("Error fetching books by title:", error.message);
         }
+        return null;
     }
 }
 

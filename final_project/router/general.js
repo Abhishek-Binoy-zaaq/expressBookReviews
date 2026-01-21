@@ -122,22 +122,26 @@ public_users.get('/review/:isbn', function (req, res) {
 
 module.exports.general = public_users;
 
-// Task 10: Get the list of books available in the shop
+// Task 10: Get the list of books available in the shop using async-await with Axios
 async function getBooks() {
     try {
+        // Enpoint to fetch all books
         const response = await axios.get('http://localhost:5000/');
         return response.data;
     } catch (error) {
+        // Log the error message if the request fails
         console.error("Error fetching books:", error.message);
     }
 }
 
-// Task 11: Get book details based on ISBN
+// Task 11: Get book details based on ISBN using async-await with Axios
 async function getBookByISBN(isbn) {
     try {
+        // Fetching book by ISBN
         const response = await axios.get(`http://localhost:5000/isbn/${isbn}`);
         return response.data;
     } catch (error) {
+        // If the book is not found (404), log that specific error
         if (error.response && error.response.status === 404) {
             console.error("Book not found");
         } else {
@@ -146,12 +150,14 @@ async function getBookByISBN(isbn) {
     }
 }
 
-// Task 12: Get book details based on Author
+// Task 12: Get book details based on Author using async-await with Axios
 async function getBookByAuthor(author) {
     try {
+        // Fetching books filter by author name
         const response = await axios.get(`http://localhost:5000/author/${author}`);
         return response.data;
     } catch (error) {
+        // Handling case where no books are found for the author
         if (error.response && error.response.status === 404) {
             console.error("No books found for this author.");
         } else {
@@ -160,12 +166,14 @@ async function getBookByAuthor(author) {
     }
 }
 
-// Task 13: Get book details based on Title
+// Task 13: Get book details based on Title using async-await with Axios
 async function getBookByTitle(title) {
     try {
+        // Fetching books filtered by their title
         const response = await axios.get(`http://localhost:5000/title/${title}`);
         return response.data;
     } catch (error) {
+        // Error handling for title not found or server issues
         if (error.response && error.response.status === 404) {
             console.error("No books found for this title.");
         } else {

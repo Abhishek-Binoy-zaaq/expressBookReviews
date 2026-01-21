@@ -32,10 +32,23 @@ public_users.get('/', function (req, res) {
 
 // Get book details based on ISBN
 // Get book details based on ISBN
+// Get book details based on ISBN using Promises - Task 11
 public_users.get('/isbn/:isbn', function (req, res) {
-  const isbn = req.params.isbn; // Retrieve the ISBN from request parameters
-  res.send(books[isbn]);        // Send the book matching that ISBN
-});
+    const isbn = req.params.isbn;
+  
+    // Task 11: Wrapping the logic in a Promise
+    const get_book_details = new Promise((resolve, reject) => {
+      if (books[isbn]) {
+        resolve(res.send(JSON.stringify(books[isbn], null, 4)));
+      } else {
+        reject(res.status(404).json({message: "ISBN not found"}));
+      }
+    });
+  
+    get_book_details
+      .then(() => console.log("Promise for Task 11 resolved"))
+      .catch(() => console.log("ISBN not found"));
+  });
   
 // Get book details based on author
 // Get book details based on author

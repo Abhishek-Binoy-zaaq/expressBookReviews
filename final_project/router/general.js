@@ -76,10 +76,11 @@ public_users.get('/author/:author', function (req, res) {
         });
 });
 
-// Task 13: Get book details based on title using Promises
+// Get book details based on title using Promises - Task 13
 public_users.get('/title/:title', function (req, res) {
     const title = req.params.title;
 
+    // Task 13: Wrapping the filtering logic in a Promise
     const get_title_books = new Promise((resolve, reject) => {
         const book_keys = Object.keys(books);
         let filtered_books = [];

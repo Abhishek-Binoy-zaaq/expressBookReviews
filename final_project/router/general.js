@@ -1,4 +1,5 @@
 const express = require('express');
+const axios = require('axios');
 let books = require("./booksdb.js");
 let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
@@ -120,3 +121,60 @@ public_users.get('/review/:isbn', function (req, res) {
 });
 
 module.exports.general = public_users;
+
+// Task 10: Get the list of books available in the shop
+async function getBooks() {
+    try {
+        const response = await axios.get('http://localhost:5000/');
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching books:", error.message);
+    }
+}
+
+// Task 11: Get book details based on ISBN
+async function getBookByISBN(isbn) {
+    try {
+        const response = await axios.get(`http://localhost:5000/isbn/${isbn}`);
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 404) {
+            console.error("Book not found");
+        } else {
+            console.error("Error fetching book:", error.message);
+        }
+    }
+}
+
+// Task 12: Get book details based on Author
+async function getBookByAuthor(author) {
+    try {
+        const response = await axios.get(`http://localhost:5000/author/${author}`);
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 404) {
+            console.error("No books found for this author.");
+        } else {
+            console.error("Error fetching books by author:", error.message);
+        }
+    }
+}
+
+// Task 13: Get book details based on Title
+async function getBookByTitle(title) {
+    try {
+        const response = await axios.get(`http://localhost:5000/title/${title}`);
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 404) {
+            console.error("No books found for this title.");
+        } else {
+            console.error("Error fetching books by title:", error.message);
+        }
+    }
+}
+
+module.exports.getBooks = getBooks;
+module.exports.getBookByISBN = getBookByISBN;
+module.exports.getBookByAuthor = getBookByAuthor;
+module.exports.getBookByTitle = getBookByTitle;
